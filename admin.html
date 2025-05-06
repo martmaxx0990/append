@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord d'administration - Surfshark Landing Page</title>
+    <link rel="stylesheet" href="css/admin-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <div class="logo">
+                <img src="images/surfshark-logo.png" alt="Surfshark">
+                <h1>Tableau de bord d'administration</h1>
+            </div>
+            <div class="user-info">
+                <span>Administrateur</span>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </header>
+
+        <div class="admin-content">
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        <li class="active"><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a></li>
+                        <li><a href="#emails"><i class="fas fa-envelope"></i> Emails collectés</a></li>
+                        <li><a href="#visitors"><i class="fas fa-users"></i> Visiteurs</a></li>
+                        <li><a href="#settings"><i class="fas fa-cog"></i> Paramètres</a></li>
+                        <li><a href="#export"><i class="fas fa-file-export"></i> Exporter les données</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <section id="dashboard" class="section active">
+                    <h2>Tableau de bord</h2>
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Emails collectés</h3>
+                                <p class="stat-number" id="email-count">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Visiteurs totaux</h3>
+                                <p class="stat-number" id="visitor-count">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Taux de conversion</h3>
+                                <p class="stat-number" id="conversion-rate">0%</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Dernière inscription</h3>
+                                <p class="stat-text" id="last-signup">Aucune</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-card">
+                            <h3>Inscriptions par jour</h3>
+                            <canvas id="signups-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Visiteurs par jour</h3>
+                            <canvas id="visitors-chart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="emails" class="section">
+                    <h2>Emails collectés</h2>
+                    <div class="actions">
+                        <div class="search-box">
+                            <input type="text" id="email-search" placeholder="Rechercher un email...">
+                            <button><i class="fas fa-search"></i></button>
+                        </div>
+                        <button class="export-btn" id="export-emails"><i class="fas fa-file-export"></i> Exporter</button>
+                    </div>
+                    <div class="table-container">
+                        <table id="emails-table">
+                            <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Date d'inscription</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="emails-list">
+                                <!-- Les données seront chargées dynamiquement -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination">
+                        <button id="prev-page"><i class="fas fa-chevron-left"></i></button>
+                        <span id="page-info">Page 1 sur 1</span>
+                        <button id="next-page"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </section>
+
+                <section id="visitors" class="section">
+                    <h2>Visiteurs</h2>
+                    <div class="actions">
+                        <div class="date-filter">
+                            <label for="date-from">Du:</label>
+                            <input type="date" id="date-from">
+                            <label for="date-to">Au:</label>
+                            <input type="date" id="date-to">
+                            <button id="apply-filter">Appliquer</button>
+                        </div>
+                        <button class="export-btn" id="export-visitors"><i class="fas fa-file-export"></i> Exporter</button>
+                    </div>
+                    <div class="table-container">
+                        <table id="visitors-table">
+                            <thead>
+                                <tr>
+                                    <th>IP</th>
+                                    <th>Date de visite</th>
+                                    <th>Pays</th>
+                                    <th>Appareil</th>
+                                    <th>Navigateur</th>
+                                    <th>Converti</th>
+                                </tr>
+                            </thead>
+                            <tbody id="visitors-list">
+                                <!-- Les données seront chargées dynamiquement -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination">
+                        <button id="visitors-prev-page"><i class="fas fa-chevron-left"></i></button>
+                        <span id="visitors-page-info">Page 1 sur 1</span>
+                        <button id="visitors-next-page"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </section>
+
+                <section id="settings" class="section">
+                    <h2>Paramètres</h2>
+                    <div class="settings-container">
+                        <div class="settings-card">
+                            <h3>Paramètres de redirection</h3>
+                            <div class="form-group">
+                                <label for="redirect-url">URL de redirection:</label>
+                                <input type="text" id="redirect-url" value="https://surfshark.com/fr/vpn-essai-gratuit">
+                            </div>
+                            <div class="form-group">
+                                <label for="redirect-delay">Délai de redirection (secondes):</label>
+                                <input type="number" id="redirect-delay" value="3" min="0" max="10">
+                            </div>
+                            <button id="save-redirect-settings">Enregistrer</button>
+                        </div>
+
+                        <div class="settings-card">
+                            <h3>Paramètres des emails</h3>
+                            <div class="form-group">
+                                <label for="email-sender">Email expéditeur:</label>
+                                <input type="email" id="email-sender" value="your-email@gmail.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="email-subject">Sujet de l'email de bienvenue:</label>
+                                <input type="text" id="email-subject" value="Bienvenue à l'essai gratuit de Surfshark VPN">
+                            </div>
+                            <button id="save-email-settings">Enregistrer</button>
+                        </div>
+
+                        <div class="settings-card">
+                            <h3>Sécurité</h3>
+                            <div class="form-group">
+                                <label for="admin-username">Nom d'utilisateur:</label>
+                                <input type="text" id="admin-username" value="admin">
+                            </div>
+                            <div class="form-group">
+                                <label for="admin-password">Mot de passe:</label>
+                                <input type="password" id="admin-password" value="********">
+                            </div>
+                            <button id="save-security-settings">Enregistrer</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="export" class="section">
+                    <h2>Exporter les données</h2>
+                    <div class="export-options">
+                        <div class="export-card">
+                            <h3>Exporter les emails</h3>
+                            <p>Téléchargez la liste complète des emails collectés au format CSV ou JSON.</p>
+                            <div class="export-buttons">
+                                <button id="export-emails-csv"><i class="fas fa-file-csv"></i> CSV</button>
+                                <button id="export-emails-json"><i class="fas fa-file-code"></i> JSON</button>
+                            </div>
+                        </div>
+
+                        <div class="export-card">
+                            <h3>Exporter les données visiteurs</h3>
+                            <p>Téléchargez les informations complètes sur les visiteurs au format CSV ou JSON.</p>
+                            <div class="export-buttons">
+                                <button id="export-visitors-csv"><i class="fas fa-file-csv"></i> CSV</button>
+                                <button id="export-visitors-json"><i class="fas fa-file-code"></i> JSON</button>
+                            </div>
+                        </div>
+
+                        <div class="export-card">
+                            <h3>Rapport complet</h3>
+                            <p>Générez un rapport complet avec toutes les statistiques et données.</p>
+                            <div class="export-buttons">
+                                <button id="generate-report"><i class="fas fa-file-pdf"></i> PDF</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
